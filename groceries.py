@@ -12,19 +12,23 @@ from matplotlib.dates import DateFormatter
 plt.style.use('seaborn')
 
 def main():
-    df = pd.read_csv('95pc_new.csv',
+    df = pd.read_csv('data/95pc_new.csv',
                     header=0,
                     index_col=0,
                     parse_dates=True,
                     infer_datetime_format=True)
 
     chart_name = datetime.today().strftime("%b%y") + "chart"
-    target_path = os.path.join('charts', chart_name + ".png")
+    
+    target_dir = 'charts'
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+    target_path = os.path.join(target_dir, chart_name + ".png")
     save_get_plot(df, target_path)
     Image.open(target_path).show()
 
 def save_get_plot(df: pd.DataFrame, path: str) -> None:
-    fig, ax = plt.subplots(figsize=(12, 5))
+    fig, ax = plt.subplots(figsize=(12, 6))
 
     ax.plot(df.index,
             df.cost_per_person,
