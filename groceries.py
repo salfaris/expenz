@@ -10,6 +10,7 @@ from datetime import datetime
 import pandas as pd
 
 FILEPATH = 'data/95pc_new.csv'
+CHARTPATH = 'charts'
 
 def main():
     df = pd.read_csv(FILEPATH,
@@ -44,15 +45,12 @@ def plot_df(df: pd.DataFrame) -> None:
     # Name of chart when saving
     chart_name = datetime.today().strftime("%b%y") + "chart"
     
-    # Name of directory to save into
-    target_dir = 'charts'
-    
     # Create directory if not exists
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)
+    if not os.path.exists(CHARTPATH):
+        os.makedirs(CHARTPATH)
     
     # Final path to save to
-    target_path = os.path.join(target_dir, chart_name + ".png")
+    target_path = os.path.join(CHARTPATH, chart_name + ".png")
     
     save_get_plot(df, target_path)
     Image.open(target_path).show()
