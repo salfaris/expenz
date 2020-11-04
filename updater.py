@@ -25,6 +25,8 @@ def update_row(df: DataFrame, path: str):
         try:
             amount = float(input())
             break
+        except ValueError:
+            print("Please insert float value only. Example: 95.52")
         except TypeError:
             print("Please insert float value only. Example: 95.52")
 
@@ -34,7 +36,7 @@ def update_row(df: DataFrame, path: str):
             TODAY.replace(day=1),
             amount,
             cost_per_person,
-            ema_single(cost_per_person, 3, last_row_ema),
+            ema_single(price=cost_per_person, span=3, prev_ema=last_row_ema),
     ]
 
     df.loc[len(df)] = to_update
