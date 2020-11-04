@@ -9,24 +9,26 @@ from datetime import datetime
 # Third-party imports
 import pandas as pd
 
+FILEPATH = 'data/95pc_new.csv'
+
 def main():
-    filepath = 'data/95pc_new.csv'
-    df = pd.read_csv(filepath,
+    df = pd.read_csv(FILEPATH,
                     header=0,
                     index_col=0,
                     parse_dates=True,
                     infer_datetime_format=True)
 
+    print(len(argv))
     if len(argv) > 2:
         print("Usage: python groceries.py [ -r | -u | -p ]")
         exit(1)
     
-    elif len(argv) == 0 or argv[1] == '-r':
+    elif len(argv) == 1 or argv[1] == '-r':
         print(df.reset_index())
         exit(0)
     
     elif argv[1] == '-u':
-        update_row(df, filepath)
+        update_row(df, FILEPATH)
         exit(0)
     
     elif argv[1] == '-p':
