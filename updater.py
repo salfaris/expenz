@@ -21,7 +21,14 @@ def update_row(df: DataFrame, path: str):
     print("Total money spent in {}?"\
             .format(TODAY.strftime("%B %Y")))
 
-    amount = float(input())
+    while True:
+        try:
+            amount = float(input())
+            break
+        except TypeError:
+            print("Please insert float value only (with decimals).")
+
+
     cost_per_person = float(amount) / 5
 
     to_update = [
