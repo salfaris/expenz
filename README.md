@@ -1,1 +1,3 @@
-# Groceries95
+# Groceries Tracker
+
+Tracking groceries had never been easier.
