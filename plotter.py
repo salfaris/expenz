@@ -46,6 +46,5 @@ def save_get_plot(df: pd.DataFrame, path: str) -> None:
                     xytext=(0, 10),
                     ha='center')
 
-    plt.xticks(rotation=0)
     plt.legend()
     fig.savefig(path, bbox_inches='tight')
