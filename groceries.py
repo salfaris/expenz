@@ -1,16 +1,17 @@
+# Local and system imports
 from helpers import gbp, get_now_month_year
-from sys import argv, exit
 import os
-from datetime import datetime
 from PIL import Image
+from sys import argv, exit
+from datetime import datetime
 
+# Third-party imports
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 plt.style.use('seaborn')
 
 def main():
-    
     df = pd.read_csv('95pc_new.csv',
                     header=0,
                     index_col=0,
