@@ -17,6 +17,6 @@ pip install -r requirements.txt
 ## Usage
 Currently, we support read, write and (plot & save) under the mapping read: -r, write: -u and plot: -p.
 ```bash
-python groceries.py [ -r | -u | -p ]
+python groceries.py [ -r | -u | -p | -up ]
 ```
 
