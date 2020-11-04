@@ -31,7 +31,7 @@ def update_row(df: DataFrame, path: str):
             print("Please insert float value only. Example: 95.52")
 
     cost_per_person = float(amount) / 5
-
+    
     to_update = [
             TODAY.replace(day=1),
             amount,
