@@ -18,7 +18,6 @@ def main():
                     parse_dates=True,
                     infer_datetime_format=True)
 
-    print(len(argv))
     if len(argv) > 2:
         print("Usage: python groceries.py [ -r | -u | -p ]")
         exit(1)
