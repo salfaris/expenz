@@ -10,9 +10,8 @@ git clone https://github.com/salfaris/groceries-tracker
 ```
 
 ## Usage
-Currently, we support read, write and (plot & save)
-
+Currently, we support read, write and (plot & save) under the mapping read: -r, write: -u and plot: -p.
 ```bash
 python groceries.py [ -r | -u | -p ]
 ```
-under the mapping read: -r, write: -u and plot: -p.
+
