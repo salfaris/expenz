@@ -18,6 +18,10 @@ def main():
                     parse_dates=True,
                     infer_datetime_format=True)
 
+    if len(argv) == 0 or '-r':
+        print(df.reset_index())
+        exit(0)
+    
     # Name of chart when saving
     chart_name = datetime.today().strftime("%b%y") + "chart"
     
@@ -35,6 +39,11 @@ def main():
     Image.open(target_path).show()
 
 def save_get_plot(df: pd.DataFrame, path: str) -> None:
+    data = {
+        "title": f"95 Princess Court Groceries (Sep. 2019 / {get_now_month_year()})",
+        "xlabel": "Month",
+        "ylabel": "Cost (£)",
+    }
     fig, ax = plt.subplots(figsize=(12, 6))
 
     ax.plot(df.index,
@@ -50,12 +59,10 @@ def save_get_plot(df: pd.DataFrame, path: str) -> None:
             color='orange',
             alpha=0.7)
 
-    # Set the top ylimit
+    # Set the top ylimit to be the maximal y-value plus an offset of 10.
     ax.set_ylim(top=df.cost_per_person.max()+10)
     
-    ax.set(title=f"95 Princess Court Groceries (Sep. 2019 / {get_now_month_year()})",
-        xlabel="Month",
-        ylabel="Cost (£)")
+    ax.set(title=data['title'], xlabel=data['xlabel'], ylabel=data['ylabel'])
 
     date_form = DateFormatter("%b. %y")
     ax.xaxis.set_major_formatter(date_form)
