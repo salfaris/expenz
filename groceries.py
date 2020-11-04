@@ -18,12 +18,19 @@ def main():
                     parse_dates=True,
                     infer_datetime_format=True)
 
+    # Name of chart when saving
     chart_name = datetime.today().strftime("%b%y") + "chart"
     
+    # Name of directory to save into
     target_dir = 'charts'
+    
+    # Create directory if not exists
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
+    
+    # Final path to save to
     target_path = os.path.join(target_dir, chart_name + ".png")
+    
     save_get_plot(df, target_path)
     Image.open(target_path).show()
 
@@ -43,6 +50,9 @@ def save_get_plot(df: pd.DataFrame, path: str) -> None:
             color='orange',
             alpha=0.7)
 
+    # Set the top ylimit
+    ax.set_ylim(top=df.cost_per_person.max()+10)
+    
     ax.set(title=f"95 Princess Court Groceries (Sep. 2019 / {get_now_month_year()})",
         xlabel="Month",
         ylabel="Cost (£)")
@@ -54,7 +64,7 @@ def save_get_plot(df: pd.DataFrame, path: str) -> None:
 
         plt.annotate(gbp(y), (x,y),
                     textcoords='offset points',
-                    xytext=(5, -15),
+                    xytext=(0, 10),
                     ha='center')
 
     plt.xticks(rotation=0)
