@@ -26,8 +26,7 @@ def update_row(df: DataFrame, path: str):
             amount = float(input())
             break
         except TypeError:
-            print("Please insert float value only (with decimals).")
-
+            print("Please insert float value only. Example: 95.52")
 
     cost_per_person = float(amount) / 5
 
