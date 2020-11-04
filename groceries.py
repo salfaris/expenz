@@ -21,15 +21,15 @@ def main():
         print("Usage: python groceries.py [ -r | -u | -p ]")
         exit(1)
     
-    if len(argv) == 0 or argv[1] == '-r':
+    elif len(argv) == 0 or argv[1] == '-r':
         print(df.reset_index())
         exit(0)
     
-    if argv[1] == '-u':
+    elif argv[1] == '-u':
         update_row(df, filepath)
         exit(0)
     
-    if argv[1] == '-p':
+    elif argv[1] == '-p':
         # Name of chart when saving
         chart_name = datetime.today().strftime("%b%y") + "chart"
         

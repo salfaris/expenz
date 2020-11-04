@@ -1,13 +1,13 @@
 from helpers import ema_single
 from datetime import datetime
+from typing import TypeVar
 import os
-import csv
 
-import pandas as pd
+DataFrame = TypeVar('pandas.core.frame.DataFrame')
 
 TODAY = datetime.today()
 
-def update_row(df: pd.DataFrame, path: str):
+def update_row(df: DataFrame, path: str):
     df = df.reset_index()
     
     last_row_data = df.values[-1].tolist()
