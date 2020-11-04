@@ -15,4 +15,4 @@ def get_month_year(dt: datetime) -> str:
     return dt.strftime("%b %Y")
 
 def get_now_month_year() -> str:
-    return get_month_year(datetime.todawy())
+    return get_month_year(datetime.today())
