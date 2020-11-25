@@ -1,6 +1,6 @@
 # Local and system imports
 from updater import update_row
-from plotter import save_get_plot
+from visuals import save_get_plot
 import os
 from PIL import Image
 from sys import argv, exit
