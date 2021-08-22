@@ -1,11 +1,38 @@
-from helpers import ema_single
 from datetime import datetime
 from typing import TypeVar
-import os
+import numpy as np
+import pandas as pd
+from helpers import ema_single
 
 DataFrame = TypeVar('pandas.core.frame.DataFrame')
 
 TODAY = datetime.today()
+
+def append_row_by_date(df: DataFrame, path: str, for_date: datetime):
+    df = df.reset_index()
+    
+    idx_to_insert_at = np.searchsorted(
+        df.date,
+        for_date,
+    )
+    
+    df_as_array = df.values
+    
+    prev_row_data = df_as_array[idx_to_insert_at-1].tolist()
+    prev_row_ema = prev_row_data[3]
+    
+    df_as_array = np.insert(
+        df_as_array,
+        idx_to_insert_at,
+        np.array(get_row_data_from_user(
+            for_date=for_date, prev_row_ema=prev_row_ema)),
+        axis=0
+    )
+    
+    df = pd.DataFrame(df_as_array, columns=df.columns)
+    
+    df.set_index('date', inplace=True)
+    df.to_csv(path, date_format='%Y-%m-%d')
 
 def update_row(df: DataFrame, path: str):
     df = df.reset_index()
@@ -18,8 +45,15 @@ def update_row(df: DataFrame, path: str):
     if last_row_date.month == TODAY.month:
         df = df[:-1]
 
+    df.loc[len(df)] = get_row_data_from_user(
+        for_date=TODAY, prev_row_ema=last_row_ema)
+
+    df.set_index('date', inplace=True)
+    df.to_csv(path, date_format='%Y-%m-%d')
+    
+def get_row_data_from_user(for_date: datetime, prev_row_ema: float):
     print("Total money spent in {}?"\
-            .format(TODAY.strftime("%B %Y")))
+            .format(for_date.strftime("%B %Y")))
 
     while True:
         try:
@@ -32,14 +66,11 @@ def update_row(df: DataFrame, path: str):
 
     cost_per_person = float(amount) / 5
     
-    to_update = [
-            TODAY.replace(day=1),
-            amount,
-            cost_per_person,
-            ema_single(price=cost_per_person, span=3, prev_ema=last_row_ema),
+    row_data = [
+        pd.Timestamp(for_date.replace(day=1)),
+        amount,
+        cost_per_person,
+        ema_single(price=cost_per_person, span=3, prev_ema=prev_row_ema),
     ]
-
-    df.loc[len(df)] = to_update
-
-    df.set_index('date', inplace=True)
-    df.to_csv(path, date_format='%Y-%m-%d')
+    
+    return row_data

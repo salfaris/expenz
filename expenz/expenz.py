@@ -1,15 +1,16 @@
 # Local and system imports
-from updater import update_row
+import updater
 from visuals import save_get_plot
 import os
 from PIL import Image
 from sys import argv, exit
 from datetime import datetime
+from dateutil.parser import parse
 
 # Third-party imports
 import pandas as pd
 
-FILEPATH = 'data/95pc_new.csv'
+FILEPATH = 'data/95pc_new_copy.csv'
 CHARTPATH = 'charts'
 
 def main():
@@ -27,8 +28,23 @@ def main():
         print(df.reset_index())
         exit(0)
     
+    elif argv[1] == '--add':
+        print("Date to add: ")
+        
+        while True:
+            try:
+                add_date = parse(input())
+                break
+            except ValueError:
+                print("Invalid date. Example: 2020 August 21")
+            except TypeError:
+                print("Invalid date. Example: 2020 August 21")
+        
+        updater.append_row_by_date(df, FILEPATH, for_date=add_date)
+        exit(0)
+    
     elif argv[1] == '-u':
-        update_row(df, FILEPATH)
+        updater.update_row(df, FILEPATH)
         exit(0)
     
     elif argv[1] == '-p':
@@ -36,7 +52,7 @@ def main():
         exit(0)
         
     elif argv[1] == '-up':
-        update_row(df, FILEPATH)
+        updater.update_row(df, FILEPATH)
         plot_df(df)
         exit(0)
 
