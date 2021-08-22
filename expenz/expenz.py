@@ -41,6 +41,7 @@ def main():
                 print("Invalid date. Example: 2020 August 21")
         
         updater.append_row_by_date(df, FILEPATH, for_date=add_date)
+        updater.recalculate_ema(df, FILEPATH)
         exit(0)
     
     elif argv[1] == '--recal-ema':
