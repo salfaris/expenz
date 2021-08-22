@@ -43,6 +43,11 @@ def main():
         updater.append_row_by_date(df, FILEPATH, for_date=add_date)
         exit(0)
     
+    elif argv[1] == '--recal-ema':
+        print("Recalculating ema...")
+        updater.recalculate_ema(df, FILEPATH)
+        exit(0)
+        
     elif argv[1] == '-u':
         updater.update_row(df, FILEPATH)
         exit(0)

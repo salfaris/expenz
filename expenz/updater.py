@@ -74,3 +74,26 @@ def get_row_data_from_user(for_date: datetime, prev_row_ema: float):
     ]
     
     return row_data
+
+def recalculate_ema(df: DataFrame, path: str):
+    df = df.reset_index()
+    
+    new_ema = []
+
+    prev_ema = 0.
+    for idx, row in df.iterrows():
+        if idx == 0:
+            new_ema.append(row.cost_per_person)
+            prev_ema = row.cost_per_person
+            continue
+        prev_ema = ema_single(
+            price=row.cost_per_person,
+            span=3,
+            prev_ema=prev_ema
+        )
+        new_ema.append(prev_ema)
+        
+    df['ema_three'] = new_ema
+    
+    df.set_index('date', inplace=True)
+    df.to_csv(path, date_format='%Y-%m-%d')
